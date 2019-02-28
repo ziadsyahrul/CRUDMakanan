@@ -1,6 +1,6 @@
 package com.ziadsyahrul.crudmakanan.data.remote;
 
-import com.ziadsyahrul.crudmakanan.model.login.LoginResponse;
+import com.ziadsyahrul.crudmakanan.model.Login.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Field;

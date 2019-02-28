@@ -1,8 +1,11 @@
-package com.ziadsyahrul.crudmakanan.model.login;
+package com.ziadsyahrul.crudmakanan.model.Login;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginData {
+public class LoginData implements Parcelable {
 
     @SerializedName("id_user")
     private String id_user;
@@ -27,6 +30,50 @@ public class LoginData {
 
     @SerializedName("level")
     private String level;
+
+    public LoginData() {
+        
+    }
+
+    protected LoginData(Parcel in) {
+        id_user = in.readString();
+        nama_user = in.readString();
+        alamat = in.readString();
+        jenkel = in.readString();
+        no_telp = in.readString();
+        username = in.readString();
+        password = in.readString();
+        level = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id_user);
+        dest.writeString(nama_user);
+        dest.writeString(alamat);
+        dest.writeString(jenkel);
+        dest.writeString(no_telp);
+        dest.writeString(username);
+        dest.writeString(password);
+        dest.writeString(level);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<LoginData> CREATOR = new Creator<LoginData>() {
+        @Override
+        public LoginData createFromParcel(Parcel in) {
+            return new LoginData(in);
+        }
+
+        @Override
+        public LoginData[] newArray(int size) {
+            return new LoginData[size];
+        }
+    };
 
     public String getId_user() {
         return id_user;

@@ -1,8 +1,7 @@
-package com.ziadsyahrul.crudmakanan.model.login;
+package com.ziadsyahrul.crudmakanan.model.Login;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import com.ziadsyahrul.crudmakanan.model.Login.LoginData;
 
 public class LoginResponse {
 
@@ -13,7 +12,7 @@ public class LoginResponse {
     private String message;
 
     @SerializedName("data")
-    private LoginData loginData;
+    private LoginData Data;
 
     public int getResult() {
         return result;
@@ -31,11 +30,11 @@ public class LoginResponse {
         this.message = message;
     }
 
-    public LoginData getLoginData() {
-        return loginData;
+    public LoginData getData() {
+        return Data;
     }
 
-    public void setLoginData(LoginData loginData) {
-        this.loginData = loginData;
+    public void setData(LoginData loginData) {
+        this.Data = Data;
     }
 }
