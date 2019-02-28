@@ -32,7 +32,7 @@ public class LoginData implements Parcelable {
     private String level;
 
     public LoginData() {
-        
+
     }
 
     protected LoginData(Parcel in) {

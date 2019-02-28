@@ -1,5 +1,8 @@
 package com.ziadsyahrul.crudmakanan.UI.login;
 
+import android.content.Context;
+
+import com.ziadsyahrul.crudmakanan.Utils.SessionManager;
 import com.ziadsyahrul.crudmakanan.data.remote.ApiClient;
 import com.ziadsyahrul.crudmakanan.data.remote.ApiInterface;
 import com.ziadsyahrul.crudmakanan.model.Login.LoginData;
@@ -13,6 +16,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     private final LoginContract.View view;
     private ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+    private SessionManager mSessionManager;
 
     public LoginPresenter(LoginContract.View view) {
         this.view = view;
@@ -61,5 +65,29 @@ public class LoginPresenter implements LoginContract.Presenter{
                 view.loginFailure(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void saveDataUser(Context context, LoginData loginData) {
+        // Membuat object SessionManager
+        mSessionManager = new SessionManager(context);
+        // Men save data ke SgaredPreference dengan menggunakan method dari class SessionManager
+        mSessionManager.createSession(loginData);
+
+
+    }
+
+    @Override
+    public void checkLogin(Context context) {
+        // Membuat object SessionManager
+        mSessionManager = new SessionManager(context);
+        // mengambil data KEY_IS_LOGIN lalu memasukkan ke dalam veriableisLogin
+        Boolean isLogin = mSessionManager.isLogin();
+        // Mengecek apakah KEY
+        if (isLogin) {
+            view.isLogin();
+        }
+        // Mengecek apakah KEY_IS_LOGIN
+
     }
 }

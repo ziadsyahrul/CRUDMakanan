@@ -39,6 +39,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        // Mengecek apakah dia sudah login atau belum
+        loginPresenter.checkLogin(this);
 
     }
 
@@ -71,6 +73,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void loginSuccess(String msg, LoginData loginData) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        // Menyimpan data ke dalam sharedPreference
+        loginPresenter.saveDataUser(this, loginData);
+
         LoginData mloginData = new LoginData();
         mloginData.setId_user(loginData.getId_user());
         mloginData.setAlamat(loginData.getAlamat());
@@ -101,5 +107,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void passwordError(String msg) {
         edtPassword.setError(msg);
         edtPassword.setFocusable(true);
+    }
+
+    @Override
+    public void isLogin() {
+        // berpindah halaman apabila user sudah login
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

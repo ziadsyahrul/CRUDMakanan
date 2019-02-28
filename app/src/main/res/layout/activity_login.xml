@@ -20,6 +20,8 @@
         android:layout_marginTop="50dp"/>
 
     <EditText
+        android:singleLine="true"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
@@ -27,6 +29,8 @@
         android:layout_marginTop="40dp"/>
 
     <EditText
+        android:singleLine="true"
+        android:maxLines="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
