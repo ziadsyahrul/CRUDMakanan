@@ -74,7 +74,6 @@ public class LoginPresenter implements LoginContract.Presenter{
         // Men save data ke SgaredPreference dengan menggunakan method dari class SessionManager
         mSessionManager.createSession(loginData);
 
-
     }
 
     @Override
