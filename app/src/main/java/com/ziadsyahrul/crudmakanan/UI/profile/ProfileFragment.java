@@ -2,6 +2,7 @@ package com.ziadsyahrul.crudmakanan.UI.profile;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.ziadsyahrul.crudmakanan.R;
 import com.ziadsyahrul.crudmakanan.model.Login.LoginData;
@@ -36,7 +38,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 public class ProfileFragment extends Fragment implements ProfileContract.View {
-
 
     @BindView(R.id.picture)
     CircleImageView picture;
@@ -60,15 +61,16 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     CardView layoutJenkel;
     Unbinder unbinder;
 
-    // TODO 1 siapkan variable yang dibutuhkan
+    // siapkan variable yang dibutuhkan
     private ProfilePresenter mProfilePresenter = new ProfilePresenter(this);
     private String idUser, name, alamat, noTelp;
     private int gender;
     private Menu action;
 
-    private int mGender = 0;
+    private String mGender;
     public static final int GENDER_MALE = 1;
     public static final int GENDER_FEMALE = 2;
+    private ProgressDialog progressDialog;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -82,18 +84,16 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-        // cara membuat options menu di fragment
         setHasOptionsMenu(true);
-        // Mensetting spinner
+
         setUpSpinner();
 
-        // Mengambil data yang dikerjakan oleh presenter
         mProfilePresenter.getDataUser(getContext());
         return view;
     }
 
     private void setUpSpinner() {
-        // Membuat adapter spinner
+        // buat adapter spinner
         ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.array_gender_options, android.R.layout.simple_spinner_item);
         // Menampilkan spinner 1 line
         genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -106,13 +106,13 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Mengambil posisi item yang dipilih
                 String selection = (String) parent.getItemAtPosition(position);
-                // Mencek posisi apakah ada isinya
-                if (!TextUtils.isEmpty(selection)){
-                    // Mencek apakah 1 atau 2 yang dipilih oleh user
+                // cek posisi apakah ada isinya
+                if (!TextUtils.isEmpty(selection)) {
+                    // Mencek apakah yang dipilih user itu 1 atau 2
                     if (selection.equals(getString(R.string.gender_male))){
-                        mGender = GENDER_MALE;
-                    } else if (selection.equals(getString(R.string.gender_female))) {
-                        mGender = GENDER_FEMALE;
+                        mGender = "L";
+                    }else if (selection.equals(getString(R.string.gender_female))){
+                        mGender = "P";
                     }
                 }
             }
@@ -125,32 +125,49 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     }
 
     @Override
+    public void showProgress() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Just a sec ...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    @Override
+    public void hideProgress() {
+        progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void showSuccessUpdateUser(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showDataUser(LoginData loginData) {
-        // Mengubah widget agar tidak bisa di edit
         readMode();
 
-        // Memasukkan data yang sudah diambil oleh presenter
+        // memasukkan data yg sudah diambil presenter
         idUser = loginData.getId_user();
         name = loginData.getNama_user();
         alamat = loginData.getAlamat();
         noTelp = loginData.getNo_telp();
-        if (loginData.getJenkel().equals("L")){
+        if (loginData.getJenkel().equals("L")) {
             gender = 1;
-        }else {
+        } else {
             gender = 2;
         }
 
-        if (!TextUtils.isEmpty(idUser)){
-            // Mensetting nama title action bar
+        if (!TextUtils.isEmpty(idUser)) {
+            // set nama title actionbar
             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profil " + name);
 
-            // Menampilkan data ke layar
             edtName.setText(name);
             edtAlamat.setText(alamat);
             edtNoTelp.setText(noTelp);
 
-            // Mencek gender dan memilih sesuai gender untuk ditampilkan pada spinner
-            switch (gender){
+            // cek gender dan memilih sesuai gender untuk ditampilkan di spinner
+            switch (gender) {
                 case GENDER_MALE:
                     spinGender.setSelection(1);
                     spinGender.setSelection(0);
@@ -160,8 +177,8 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                     spinGender.setSelection(1);
                     break;
             }
-        }else {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profil");
+        } else {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Profile");
         }
     }
 
@@ -173,9 +190,9 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
 
     @OnClick(R.id.btn_logout)
     public void onViewClicked() {
-        // melakukan perintah logout ke presenter
+        // perintah logout ke presenter
         mProfilePresenter.logoutSession(getContext());
-        // Menutup mainActivity
+        // menutup mainactivity
         getActivity().finish();
     }
 
@@ -193,34 +210,49 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_edit:
-
                 editMode();
 
                 action.findItem(R.id.menu_edit).setVisible(false);
                 action.findItem(R.id.menu_save).setVisible(true);
-
                 return true;
+
             case R.id.menu_save:
-                // Mencek apakah user ada isinya
-                if (TextUtils.isEmpty(idUser)) {
-                    // Mencek apakah semua field masih kosong
+                // cek user apakah ada isinya
+                if (!TextUtils.isEmpty(idUser)) {
+                    // cek field nya apakah semuanya kosong
                     if (TextUtils.isEmpty(edtName.getText().toString()) ||
                             TextUtils.isEmpty(edtAlamat.getText().toString()) ||
                             TextUtils.isEmpty(edtNoTelp.getText().toString())) {
-                        // Menampilkan alertDialog untuk memberi tahu user tidak boleh kosong
+
+                        // Menampilkan alert dialog untuk memberi tahu kepada user kalo kolomnya tidak boleh kosong
                         android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getContext());
                         alertDialog.setMessage("Please complete the field");
-                        alertDialog.setPositiveButton("Sip", new DialogInterface.OnClickListener() {
+                        alertDialog.setPositiveButton("Wokehh", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+                                editMode();
+                                action.findItem(R.id.menu_edit).setVisible(false);
+                                action.findItem(R.id.menu_save).setVisible(true);
                             }
                         });
                         alertDialog.show();
-                    } else {
+                    }else {
+                        // apabila user telah melengkapi kolom
+                        LoginData loginData = new LoginData();
+                        // mengisi inputan user ke model logindata
+                        loginData.setId_user(idUser);
+                        loginData.setNama_user(edtName.getText().toString());
+                        loginData.setAlamat(edtAlamat.getText().toString());
+                        loginData.setNo_telp(edtNoTelp.getText().toString());
+                        loginData.setJenkel(mGender);
+
+                        // mengirim data ke presenter untuk dimasukkan ke database
+                        mProfilePresenter.updateDataUser(getContext(), loginData);
+
                         readMode();
-                        action.findItem(R.id.menu_edit).setVisible(true);
-                        action.findItem(R.id.menu_save).setVisible(false);
+                        action.findItem(R.id.menu_edit).setVisible(false);
+                        action.findItem(R.id.menu_save).setVisible(true);
                     }
                 }else {
                     readMode();
@@ -228,11 +260,22 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
                     action.findItem(R.id.menu_save).setVisible(false);
                 }
                 readMode();
+                action.findItem(R.id.menu_edit).setVisible(true);
+                action.findItem(R.id.menu_save).setVisible(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void editMode() {
+        edtName.setFocusableInTouchMode(true);
+        edtAlamat.setFocusableInTouchMode(true);
+        edtNoTelp.setFocusableInTouchMode(true);
+
+        spinGender.setEnabled(true);
+        fabChoosePic.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("RestrictedApi")
@@ -249,16 +292,5 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
         fabChoosePic.setVisibility(View.INVISIBLE);
 
     }
-
-    @SuppressLint("RestrictedApi")
-    private void editMode() {
-        edtName.setFocusableInTouchMode(true);
-        edtAlamat.setFocusableInTouchMode(true);
-        edtNoTelp.setFocusableInTouchMode(true);
-
-        spinGender.setEnabled(true);
-        fabChoosePic.setVisibility(View.VISIBLE);
-
-
-    }
 }
+

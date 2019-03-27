@@ -47,6 +47,8 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     // Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+    // Toasty
+    implementation 'com.github.GrenderG:Toasty:1.4.1'
 
 
 
