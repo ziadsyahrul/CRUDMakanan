@@ -105,6 +105,5 @@ public class StartSnapHelper extends LinearSnapHelper {
         }
         return mHorizontalHelper;
     }
-
 }
 

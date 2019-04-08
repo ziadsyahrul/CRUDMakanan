@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.ziadsyahrul.crudmakanan.R;
 import com.ziadsyahrul.crudmakanan.UI.favorite.FavoriteFragment;
 import com.ziadsyahrul.crudmakanan.UI.makanan.MakananFragment;
+import com.ziadsyahrul.crudmakanan.UI.makananbyuser.MakananByUser;
 import com.ziadsyahrul.crudmakanan.UI.profile.ProfileFragment;
 
 import butterknife.BindView;
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     loadFragment(makananFragment);
                     return true;
                 case R.id.navigation_favorite:
-                    FavoriteFragment favoriteFragment = new FavoriteFragment();
-                    loadFragment(favoriteFragment);
+                    MakananByUser makananByUser = new MakananByUser();
+                    loadFragment(makananByUser);
                     return true;
                 case R.id.navigation_profile:
                     ProfileFragment profileFragment = new ProfileFragment();

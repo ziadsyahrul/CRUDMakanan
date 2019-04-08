@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.View {
     CardView layoutJenkel;
     Unbinder unbinder;
 
-    // siapkan variable yang dibutuhkan
+    // TODO 1 siapkan variable yang dibutuhkan
     private ProfilePresenter mProfilePresenter = new ProfilePresenter(this);
     private String idUser, name, alamat, noTelp;
     private int gender;

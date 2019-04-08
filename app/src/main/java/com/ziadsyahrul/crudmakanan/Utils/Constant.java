@@ -7,6 +7,11 @@ public class Constant {
     public static final String KEY_LOGIN = "KEY_LOGIN";
 
 
+    public static final int STORAGE_PERMISSION_CODE = 1;
+    public static final int REQUEST_CODE = 2;
+    public static final String KEY_EXTRA_ID_MAKANAN = "KEY_EXTRA_ID_MAKANAN";
+    public static final String KEY_EXTRA_ID_CATEGORY = "KEY_EXTRA_ID_CATEGORY";
+
 
     // KEY untuk SHARED PREFERENCE
     public static String pref_name = "pref";

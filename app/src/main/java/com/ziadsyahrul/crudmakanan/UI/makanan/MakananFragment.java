@@ -2,19 +2,19 @@ package com.ziadsyahrul.crudmakanan.UI.makanan;
 
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ziadsyahrul.crudmakanan.R;
-import com.ziadsyahrul.crudmakanan.Utils.StartSnapHelper;
+import com.ziadsyahrul.crudmakanan.UI.uploadmakanan.UploadMakananActivity;
 import com.ziadsyahrul.crudmakanan.adapter.MakananAdapter;
 import com.ziadsyahrul.crudmakanan.model.makanan.MakananData;
 
@@ -22,6 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import es.dmoral.toasty.Toasty;
 
@@ -36,9 +37,11 @@ public class MakananFragment extends Fragment implements MakananContract.View {
     RecyclerView rvMakananPopuler;
     @BindView(R.id.rv_kategori)
     RecyclerView rvKategori;
-    @BindView(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh_fm)
     SwipeRefreshLayout swipeRefresh;
     Unbinder unbinder;
+    @BindView(R.id.floating_action_button)
+    FloatingActionButton floatingActionButton;
 
     // TODO 1 membuat variable yang dibutuhkan
     private ProgressDialog mProgressDialog;
@@ -116,5 +119,11 @@ public class MakananFragment extends Fragment implements MakananContract.View {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.floating_action_button)
+    public void onViewClicked() {
+        startActivity(new Intent(getContext(), UploadMakananActivity.class));
     }
 }

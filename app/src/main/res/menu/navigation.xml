@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_favorite"
         android:icon="@drawable/ic_favorite_border"
-        android:title="@string/favorite" />
+        android:title="@string/kelola_makanan" />
 
     <item
         android:id="@+id/navigation_profile"

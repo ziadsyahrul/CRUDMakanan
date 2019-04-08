@@ -1,10 +1,8 @@
-package com.ziadsyahrul.crudmakanan.model.makanan;
+package com.ziadsyahrul.crudmakanan.model.uploadmakanan;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-public class MakananResponse {
+public class UploadMakananResponse {
 
     @SerializedName("result")
     private int result;
@@ -12,15 +10,11 @@ public class MakananResponse {
     @SerializedName("message")
     private String message;
 
-    @SerializedName("data")
-    private List<MakananData> makananDataList;
-
     @SerializedName("url")
     private String url;
 
     @SerializedName("name")
     private String name;
-
 
     public int getResult() {
         return result;
@@ -36,14 +30,6 @@ public class MakananResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public List<MakananData> getMakananDataList() {
-        return makananDataList;
-    }
-
-    public void setMakananDataList(List<MakananData> makananDataList) {
-        this.makananDataList = makananDataList;
     }
 
     public String getUrl() {
