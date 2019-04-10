@@ -203,7 +203,7 @@ public class DetailMakananByUserActivity extends AppCompatActivity implements De
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                
             }
         });
 

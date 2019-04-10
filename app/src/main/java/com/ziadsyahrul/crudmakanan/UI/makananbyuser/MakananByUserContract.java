@@ -17,4 +17,3 @@ public interface MakananByUserContract {
         void getListByUser(String idUser);
     }
 }
-
