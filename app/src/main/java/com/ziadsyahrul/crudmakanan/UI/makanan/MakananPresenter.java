@@ -31,7 +31,7 @@ public class MakananPresenter implements MakananContract.Presenter{
             public void onResponse(Call<MakananResponse> call, Response<MakananResponse> response) {
                 view.hideProgress();
 
-                if (response.body().getMakananDataList() != null){
+                if (response.body() != null){
                     view.showFoodNewsList(response.body().getMakananDataList());
                     Log.i("Cek Berhasil", "ada isinya");
                 }else {
@@ -60,7 +60,7 @@ public class MakananPresenter implements MakananContract.Presenter{
             public void onResponse(Call<MakananResponse> call, Response<MakananResponse> response) {
                 view.hideProgress();
 
-                if (response.body().getMakananDataList() != null){
+                if (response.body() != null){
                     view.showFoodPopuler(response.body().getMakananDataList());
                     Log.i("Cek Berhasil", "ada isinya");
                 }else {
@@ -89,7 +89,7 @@ public class MakananPresenter implements MakananContract.Presenter{
             public void onResponse(Call<MakananResponse> call, Response<MakananResponse> response) {
                 view.hideProgress();
 
-                if (response.body().getMakananDataList() != null){
+                if (response.body() != null){
                     view.showFoodKategoryList(response.body().getMakananDataList());
                     Log.i("Cek Berhasil", "ada isinya");
                 }else {

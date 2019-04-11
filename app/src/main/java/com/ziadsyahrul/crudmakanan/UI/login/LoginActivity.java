@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         switch (view.getId()) {
             case R.id.btn_login:
                 loginPresenter.doLogin(edtUsername.getText().toString(), edtPassword.getText().toString());
-
                 break;
             case R.id.txt_register:
                 startActivity(new Intent(this, RegisterActivity.class));

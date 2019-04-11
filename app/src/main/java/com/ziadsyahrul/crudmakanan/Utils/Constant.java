@@ -2,8 +2,8 @@ package com.ziadsyahrul.crudmakanan.Utils;
 
 public class Constant {
 
-
-    public static final String BASE_URL = "http://my-crud-makanan.000webhostapp.com/";
+    // Menambahkan alamat api
+    public static final String BASE_URL = "http://192.168.71.40/makanan";
     public static final String KEY_LOGIN = "KEY_LOGIN";
 
 
